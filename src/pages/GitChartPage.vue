@@ -8,13 +8,13 @@ const max = ref(5)
 let interval;
 function getVirtulData(year) {
   year = year || '2022';
-  var date = +echarts.number.parseDate(year + '-01-01');
-  var end = +echarts.number.parseDate(+year + 1 + '-01-01');
+  const date = +echarts.number.parseDate(year + '-01-01');
+  const end = +echarts.number.parseDate(+year + 1 + '-01-01');
 
 
-  var dayTime = 3600 * 24 * 1000;
-  var data = [];
-  for (var time = date; time < end; time += dayTime) {
+  const dayTime = 3600 * 24 * 1000;
+  const data = [];
+  for (let time = date; time < end; time += dayTime) {
     data.push([
       echarts.format.formatTime('yyyy-MM-dd', time),
       Math.floor(Math.random() * max.value) + min.value
@@ -24,11 +24,6 @@ function getVirtulData(year) {
 }
 function getOptions(year) {
   return {
-    title: {
-      top: 30,
-      left: 'center',
-      text: 'Daily Commits Count'
-    },
     tooltip: {},
     visualMap: {
       min: 0,
@@ -36,33 +31,31 @@ function getOptions(year) {
       type: 'continuous', // 'continuous' 'piecewise'
       orient: 'horizontal',
       left: 'center',
-      top: 65,
+      top: 135,
+      text: ['Max', 'Min'],
+      calculable: true,
       inRange: {
         color: ['#ffffff', '#40c463', '#216e39']
       },
     },
     calendar: {
-      top: 120,
-      left: 30,
-      right: 30,
+      top: 30,
+      left: 0,
+      right: 0,
       cellSize: ['auto', 14],
+      borderWidth: 0.5,
+      borderColor: '#b21d1d',
       range: '2022',
       itemStyle: {
-        borderWidth: 0.5
+        borderWidth: 1,
+        borderColor: '#fff'
       },
-      yearLabel: {show: false}
+      yearLabel: {show: true},
     },
     series: {
       type: 'heatmap',
       coordinateSystem: 'calendar',
       data: getVirtulData(year),
-      animationDelay: function(idx) {
-        return idx * 10;
-      }
-    },
-    animationEasing: 'elasticOut',
-    animationDelayUpdate: function(idx) {
-      return idx * 5;
     }
   };
 }
