@@ -6,6 +6,7 @@ import { ref } from 'vue'
 const min = ref(0)
 const max = ref(5)
 let interval;
+/** @type {(string) => echarts } */
 function getVirtulData(year) {
   year = year || '2022';
   const date = +echarts.number.parseDate(year + '-01-01');
@@ -24,7 +25,17 @@ function getVirtulData(year) {
 }
 function getOptions(year) {
   return {
-    tooltip: {},
+    tooltip: {
+      trigger: 'item',
+      formatter: '{a} <br/>{b} : {c}%'
+    },
+    toolbox: {
+      feature: {
+        dataView: { readOnly: false },
+      },
+      right: 20,
+      top: 160
+    },
     visualMap: {
       min: 0,
       max: max.value,
@@ -53,6 +64,8 @@ function getOptions(year) {
       yearLabel: {show: true},
     },
     series: {
+      name: 'Commits count',
+      template: 'bar',
       type: 'heatmap',
       coordinateSystem: 'calendar',
       data: getVirtulData(year),
