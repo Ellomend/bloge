@@ -7,16 +7,18 @@ const router = createRouter({
             path: "/",
             name: "Home",
             component: () => import("../pages/HomePage.vue"),
-        },
-        {
-            path: "/about",
-            name: "About",
-            component: () => import("../pages/AboutPage.vue"),
-        },
-        {
-            path: "/gitchart",
-            name: "GitChart",
-            component: () => import("../pages/GitChartPage.vue"),
+            children: [
+                {
+                    path: "/about",
+                    name: "About",
+                    component: () => import("../pages/AboutPage.vue"),
+                },
+                {
+                    path: "/gitchart",
+                    name: "GitChart",
+                    component: () => import("../pages/GitChartPage.vue"),
+                },
+            ]
         },
         {
             path: "/:pathMatch(.*)*",
